@@ -17,16 +17,12 @@ tokenized_words = word_tokenize(cleaned_text, "english")
 
 # Removing Stop Words
 final_words = [word for word in tokenized_words if word not in stopwords.words('english')]
-# for word in tokenized_words:
-#     if word not in stopwords.words('english'):
-#         final_words.append(word)
+
 
 
 # Lemmatization - From plural to single + Base form of a word (example better-> good)
-lemma_words = []
-for word in final_words:
-    word = WordNetLemmatizer().lemmatize(word)
-    lemma_words.append(word)
+lemma_words = [WordNetLemmatizer().lemmatize(word) for word in final_words]
+
 
 emotion_list = []
 with open('emotions.txt', 'r') as file:
@@ -45,11 +41,11 @@ print(w)
 def sentiment_analyse(sentiment_text):
     score = SentimentIntensityAnalyzer().polarity_scores(sentiment_text)
     if score['neg'] > score['pos']:
-        print("Negative Sentiment")
+        print("Negative Sentiment 😢!")
     elif score['neg'] < score['pos']:
-        print("Positive Sentiment")
+        print("Positive Sentiment 😊!")
     else:
-        print("Neutral Sentiment")
+        print("Neutral Sentiment 😐!")
 
 
 sentiment_analyse(cleaned_text)
